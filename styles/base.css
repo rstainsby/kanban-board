@@ -1,0 +1,136 @@
+:root {
+  --cl-royal-purple: 242, 48%, 58%;
+  --cl-light-purple: 243, 100%, 82%;
+  --cl-black: 237, 100%, 4%;
+  --cl-dark-grey-1: 235, 16%, 15%;
+  --cl-dark-grey-2: 235, 12%, 19%;
+  --cl-dark-grey-3: 236, 11%, 27%;
+  --cl-light-grey-1: 216, 15%, 57%;
+  --cl-light-grey-2: 221, 69%, 94%;
+  --cl-light-grey-3: 220, 69%, 97%;
+  --cl-white: 0, 0%, 100%;
+  --cl-coral: 0, 78%, 63%;
+  --cl-bleached-coral: 0, 100%, 80%;
+
+  --fs-heading-xl: 1.5rem;
+  --fs-heading-lg: 1.125rem;
+  --fs-heading-md: 0.9375rem;
+  --fs-heading-sm: 0.8125rem;
+  --fs-body-lg: 0.8125;
+  --fs-body-md: 0.75rem;
+
+  --cl-primary: var(--cl-royal-purple);
+  --cl-primary-hover: var(--cl-light-purple);
+  --cl-primary-text: var(--cl-white);
+
+  --cl-secondary: var(--cl-light-grey-3);
+  --cl-secondary-hover: var(--cl-light-grey-3);
+  --cl-secondary-text: var(--cl-royal-purple);
+
+  --cl-destructive: var(--cl-coral);
+  --cl-destructive-hover: var(--cl-bleached-coral);
+  --cl-destructive-text: var(--cl-white);
+
+  --cl-base: var(--cl-dark-grey-2);
+  --cl-base-text: var(--cl-white);
+
+  /* set the color scheme, default to light */
+  color-scheme: var(--color-scheme, light);
+}
+
+&:has(#color-scheme input[value="dark"]:checked) {
+  --color-scheme: dark;
+
+  --cl-base: var(--cl-dark-grey-2);
+  --cl-base-text: var(--cl-white);
+
+  --cl-primary: var(--cl-royal-purple);
+  --cl-primary-hover: var(--cl-light-purple);
+  --cl-primary-text: var(--cl-white);
+
+  --cl-secondary: var(--cl-light-grey-3);
+  --cl-secondary-hover: var(--cl-light-grey-3);
+  --cl-secondary-text: var(--cl-royal-purple);
+
+  --cl-destructive: var(--cl-coral);
+  --cl-destructive-hover: var(--cl-bleached-coral);
+  --cl-destructive-text: var(--cl-white);
+
+  --cl-base: var(--cl-dark-grey-2);
+  --cl-base-text: var(--cl-white);
+}
+
+@media (prefers-color-scheme:dark) {
+  &:has(#color-scheme input[value="system"]:checked) {
+    --color-scheme: dark;
+  
+    --cl-base: var(--cl-dark-grey-2);
+    --cl-base-text: var(--cl-white);
+
+    --cl-primary: var(--cl-royal-purple);
+    --cl-primary-hover: var(--cl-light-purple);
+    --cl-primary-text: var(--cl-white);
+  
+    --cl-secondary: var(--cl-light-grey-3);
+    --cl-secondary-hover: var(--cl-light-grey-3);
+    --cl-secondary-text: var(--cl-royal-purple);
+  
+    --cl-destructive: var(--cl-coral);
+    --cl-destructive-hover: var(--cl-bleached-coral);
+    --cl-destructive-text: var(--cl-white);
+  
+    --cl-base: var(--cl-dark-grey-2);
+    --cl-base-text: var(--cl-white);
+  }
+}
+
+h1 {
+  font-size: var(--fs-heading-xl);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--fs-heading-lg);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h3 {
+  font-size: var(--fs-heading-md);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: var(--fs-heading-sm);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+p {
+  font-size: var(--fs-body-lg);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+h1, 
+h2, 
+h3, 
+h4, 
+p {
+  color: var(--cl-base-text);
+}
+
+input {
+  background-color: var(--cl-base);
+  color: var(--cl-base-text);
+}
+
+input:invalid {
+  border-color: var(--cl-destructive);
+}
+
+input:focus {
+  border-color: var(--cl-primary);
+}
