@@ -186,127 +186,17 @@ const MyPreset = definePreset(Aura, {
         colorScheme: {
             light: {
                 surface: {
-                    0: "#ffffff",
-                    50: "#fefeff",
-                    100: "#f9fafe",
-                    200: "#f3f6fd",
-                    300: "#eef3fc",
-                    400: "#e9effb",
-                    500: "#e4ebfa",
-                    600: "#c2c8d5",
-                    700: "#a0a5af",
-                    800: "#7d818a",
-                    900: "#5b5e64",
-                    950: "#393b3f"
-                },
-                primary: {
-                    color: "{primary.500}",
-                    contrastColor: "#ffffff",
-                    hoverColor: "{primary.600}",
-                    activeColor: "{primary.700}"
-                },
-                highlight: {
-                    background: "{primary.50}",
-                    focusBackground: "{primary.100}",
-                    color: "{primary.700}",
-                    focusColor: "{primary.800}"
-                },
-                mask: {
-                    background: "rgba(0,0,0,0.4)",
-                    color: "{surface.200}"
-                },
-                formField: {
-                    background: "{surface.0}",
-                    disabledBackground: "{surface.400}",
-                    filledBackground: "{surface.100}",
-                    filledHoverBackground: "{surface.0}",
-                    filledFocusBackground: "{surface.100}",
-                    borderColor: "{surface.600}",
-                    hoverBorderColor: "{surface.700}",
-                    focusBorderColor: "{primary.color}",
-                    invalidBorderColor: "{red.400}",
-                    color: "{surface.700}",
-                    disabledColor: "{surface.500}",
-                    placeholderColor: "{surface.700}",
-                    invalidPlaceholderColor: "{red.600}",
-                    floatLabelColor: "{surface.700}",
-                    floatLabelFocusColor: "{primary.600}",
-                    floatLabelActiveColor: "{surface.700}",
-                    floatLabelInvalidColor: "{form.field.invalid.placeholder.color}",
-                    iconColor: "{surface.600}",
-                    shadow: "0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05)"
-                },
-                text: {
-                    color: "{surface.800}",
-                    hoverColor: "{surface.900}",
-                    mutedColor: "{surface.800}",
-                    hoverMutedColor: "{surface.900}"
-                },
-                content: {
-                    background: "{surface.0}",
-                    hoverBackground: "{surface.100}",
-                    borderColor: "{surface.200}",
-                    color: "{text.color}",
-                    hoverColor: "{text.hover.color}"
-                },
-                overlay: {
-                    select: {
-                        background: "{surface.0}",
-                        borderColor: "{surface.200}",
-                        color: "{text.color}"
-                    },
-                    popover: {
-                        background: "{surface.0}",
-                        borderColor: "{surface.200}",
-                        color: "{text.color}"
-                    },
-                    modal: {
-                        background: "{surface.0}",
-                        borderColor: "{surface.200}",
-                        color: "{text.color}"
-                    }
-                },
-                list: {
-                    option: {
-                        focusBackground: "{surface.600}",
-                        selectedBackground: "{surface.700}",
-                        selectedFocusBackground: "{surface.800}",
-                        color: "{text.color}",
-                        focusColor: "{text.hover.color}",
-                        selectedColor: "{highlight.color}",
-                        selectedFocusColor: "{highlight.focus.color}",
-                        icon: {
-                            color: "{surface.600}",
-                            focusColor: "{surface.700}"
-                        }
-                    },
-                    optionGroup: {
-                        background: "{surface.800}",
-                        color: "{text.muted.color}"
-                    }
-                },
-                navigation: {
-                    item: {
-                        focusBackground: "{surface.700}",
-                        activeBackground: "{surface.100}",
-                        color: "{text.color}",
-                        focusColor: "{text.hover.color}",
-                        activeColor: "{text.hover.color}",
-                        icon: {
-                            color: "{surface.700}",
-                            focusColor: "{surface.700}",
-                            activeColor: "{surface.800}"
-                        }
-                    },
-                    submenuLabel: {
-                        background: "{surface.800}",
-                        color: "{text.muted.color}"
-                    },
-                    submenuIcon: {
-                        color: "{surface.600}",
-                        focusColor: "{surface.700}",
-                        activeColor: "{surface.800}"
-                    }
+                    0: "{zinc.0}",
+                    50: "{zinc.50}",
+                    100: "{zinc.100}",
+                    200: "{zinc.200}",
+                    300: "{zinc.300}",
+                    400: "{zinc.400}",
+                    500: "{zinc.500}",
+                    600: "{zinc.600}",
+                    700: "{zinc.700}",
+                    800: "{zinc.800}",
+                    900: "{zinc.900}",
                 }
             },
             dark: {
@@ -350,7 +240,7 @@ const MyPreset = definePreset(Aura, {
                     hoverBorderColor: "{surface.300}",
                     focusBorderColor: "{primary.color}",
                     invalidBorderColor: "{red.300}",
-                    color: "{surface.0}",
+                    color: "{surface.600}",
                     disabledColor: "{surface.400}",
                     placeholderColor: "{surface.300}",
                     invalidPlaceholderColor: "{red.400}",
@@ -358,7 +248,7 @@ const MyPreset = definePreset(Aura, {
                     floatLabelFocusColor: "{primary.color}",
                     floatLabelActiveColor: "{surface.400}",
                     floatLabelInvalidColor: "{form.field.invalid.placeholder.color}",
-                    iconColor: "{surface.400}",
+                    iconColor: "{surface.600}",
                     shadow: "0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05)"
                 },
                 text: {
@@ -435,11 +325,6 @@ const MyPreset = definePreset(Aura, {
                 }
             }
         }
-    },
-    components: {
-      button: {
-        
-      }
     }
 });
 
