@@ -5,9 +5,10 @@ import Theme from './styles/theme'
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules:['@primevue/nuxt-module'],
+  modules:['@primevue/nuxt-module', 'nuxt-icons'],
   primevue: {
     options: {
+
       theme: {
         preset: Theme,
         options: {
