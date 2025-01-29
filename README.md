@@ -6,12 +6,14 @@ The project is based on the [Kanban Task Management Web App](https://www.fronten
 
 ## Software Architecture
 
-This project is built using:
+This project is built with:
 
-- Vue 3 as it's framework 
-- Nuxt 3 as it's meta-framework
-- Pinia for state management
-- pnpm for package management (It's just so much faster than NPM, feel free to use whatever you like)
+- 🧱 Framework: Vue 3 
+- 🏗️ Meta-framework: Nuxt 3 
+- 📦 Package management: PNPM
+- 📚 UI Library: PrimeVue
+- 🧪 Unit Testing: Vitest
+- 🚰 CI Pipeline: Github Actions
 
 Some might consider Nuxt to be overkill for a project of this size but I feel that the pre-defined project strucuture, file based routing, robust plugins system and SSR all make it worthwhile to use for the majority of Vue 3 projects. I don't know why I feel the need to justify this on a personal project but here we are.
 
