@@ -5,13 +5,19 @@ import Theme from './styles/theme'
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules:['@primevue/nuxt-module', 'nuxt-icons'],
+  modules:[
+    '@primevue/nuxt-module', 
+    'nuxt-icons', 
+    '@nuxt/test-utils/module'
+  ],
   primevue: {
     options: {
-
       theme: {
         preset: Theme,
         options: {
+          cssLayer: {
+            name: 'primevue'
+          },
           darkModeSelector: '[data-theme="dark"]',
         }
       }
