@@ -186,18 +186,25 @@ const MyPreset = definePreset(Aura, {
         colorScheme: {
             light: {
                 surface: {
-                    0: "{zinc.0}",
-                    50: "{zinc.50}",
-                    100: "{zinc.100}",
-                    200: "{zinc.200}",
-                    300: "{zinc.300}",
-                    400: "{zinc.400}",
-                    500: "{zinc.500}",
-                    600: "{zinc.600}",
-                    700: "{zinc.700}",
-                    800: "{zinc.800}",
-                    900: "{zinc.900}",
-                }
+                    0: "{slate.0}",
+                    50: "{slate.50}",
+                    100: "{slate.100}",
+                    200: "{slate.200}",
+                    300: "{slate.300}",
+                    400: "{slate.400}",
+                    500: "{slate.500}",
+                    600: "{slate.600}",
+                    700: "{slate.700}",
+                    800: "{slate.800}",
+                    900: "{slate.900}",
+                },
+                page: {
+                    background: "{surface.200}",
+                },
+                newColumn: {
+                    borderColor: "{surface.300}",
+                    hoverBackground: "{surface.50}",
+                },
             },
             dark: {
                 surface: {
@@ -225,6 +232,13 @@ const MyPreset = definePreset(Aura, {
                     focusBackground: "color-mix(in srgb, {primary.400}, transparent 76%)",
                     color: "rgba(255,255,255,.87)",
                     focusColor: "rgba(255,255,255,.87)"
+                },
+                page: {
+                    background: "{surface.800}",
+                },
+                newColumn: {
+                    borderColor: "{surface.300}",
+                    hoverBackground: "{surface.700}",  
                 },
                 mask: {
                     background: "rgba(0,0,0,0.6)",
@@ -325,6 +339,28 @@ const MyPreset = definePreset(Aura, {
                 }
             }
         }
+    },
+    components: {
+        card: {
+            root: {
+                borderRadius: "{border.radius.md}",
+            },
+            body: {
+                padding: "0",
+            },
+            colorScheme: {
+                light: {
+                    root: {
+                        background: "{surface.50}",
+                    }
+                },
+                dark: {
+                    root: {
+                        background: "{surface.600}",
+                    }
+                }
+            }
+        },
     }
 });
 
