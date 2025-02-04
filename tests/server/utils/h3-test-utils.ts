@@ -15,6 +15,7 @@ export function useH3TestUtils() {
   vi.stubGlobal("getRouterParam", vi.fn((event: H3Event, key: string) => event.context.params?.[key]));
   vi.stubGlobal("getQuery", vi.fn((event: H3Event) => event.context.query));
   vi.stubGlobal("readBody", vi.fn(async (event: H3Event) => event.context.body));
+  vi.stubGlobal("readValidatedBody", vi.fn(async (event: H3Event, parse: any) => parse(event.context.body)));
 
   return h3;
 };
