@@ -5,7 +5,7 @@ import type { KanbanColumn } from "~/types/kanban/column";
 
 describe("[GET] boards/[id]/columns", async () => {
   let h3 = useH3TestUtils();
-  const handler = await import('~/server/api/boards/[id]/columns.get');
+  const handler = await import('~/server/api/boards/[boardId]/columns.get');
 
   it("should be registered as an event handler", async () => {
     expect(h3.defineEventHandler).toHaveBeenCalled();

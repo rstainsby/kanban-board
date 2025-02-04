@@ -4,7 +4,7 @@ import { useH3TestUtils } from "./utils/h3-test-utils";
 
 describe("[GET] boards/[id]/tasks", async () => {
   let h3 = useH3TestUtils();
-  const handler = await import('~/server/api/boards/[id]/tasks.get');
+  const handler = await import('~/server/api/boards/[boardId]/tasks.get');
 
   it("should be registered as an event handler", async () => {
     expect(h3.defineEventHandler).toHaveBeenCalled();
@@ -13,7 +13,7 @@ describe("[GET] boards/[id]/tasks", async () => {
   it('should throw an error if the id is not a UUID', async () => {
     const event: Partial<H3Event> = {
       context: {
-        params: { id: '1' },
+        params: { boardId: '1' },
         query: {}
       },
     };
@@ -49,7 +49,6 @@ describe("[GET] boards/[id]/tasks", async () => {
         $db: {
           all: vi.fn((query: string, cb: (err: Error | null, rows: unknown[]) => void) => {
             if (query.includes('FROM subtasks')) {
-              console.log('subtasks');
               cb(null, [{ id: '52144ec3-a5e1-416b-958d-66a407f44cd7', taskId: '52144ec3-a5e1-416b-958d-66a407f44cc9', description: 'Subtask 1 description' }]);
             } else {
               cb(null, [{ id: '52144ec3-a5e1-416b-958d-66a407f44cc9', columnId: '1a0f36bc-5e3d-45fa-aea3-8179a149b59c', title: 'Task 1', description: 'Task 1 description' }]);
@@ -57,7 +56,7 @@ describe("[GET] boards/[id]/tasks", async () => {
           }),
         },
         params: {
-          id: '52144ec3-a5e1-416b-958d-66a407f44cc9'
+          boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9'
         },
         query: {
           includeSubtasks: true

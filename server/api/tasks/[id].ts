@@ -1,4 +1,4 @@
-import { getSubtasks, getTask } from "~/server/db/tasks";
+import { getSubtasksForTask, getTask } from "~/server/db/tasks";
 import { useUuidValidator } from "~/server/utils/uuid-validator";
 
 export default defineEventHandler(async (event) => {
@@ -14,18 +14,14 @@ export default defineEventHandler(async (event) => {
  const tasksPromise = getTask(event.context.$db, taskId!);
 
   if (queryParams.includeSubtasks == true) {
-    const subtasksPromise = getSubtasks(event.context.$db, taskId!);
+    const subtasksPromise = getSubtasksForTask(event.context.$db, taskId!);
     
     const [task, subtasks] = await Promise.all([tasksPromise, subtasksPromise]);
-
-    console.log('task', task, subtasks);
 
     const tasksAndSubtasksFormatted = {
       ...task,
       subtasks: subtasks
     }
-
-    console.log('tasksAndSubtasksFormatted', tasksAndSubtasksFormatted);
 
     return tasksAndSubtasksFormatted;
   }

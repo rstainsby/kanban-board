@@ -1,12 +1,12 @@
 import sqlite3 from "sqlite3";
-import { Subtask } from "~/types/kanban/subtask";
-import { KanbanTask } from "~/types/kanban/task";
+import type { KanbanSubtask } from "~/types/kanban/subtask";
+import type { KanbanTask } from "~/types/kanban/task";
 
 export const getAllTasksForBoard = (db: sqlite3.Database, boardId: string) => 
   asyncQueryAllWrapper<KanbanTask>(db, `
-    SELECT * 
+    SELECT tasks.* 
     FROM tasks 
-    LEFT JOIN columns ON tasks.columnId = columns.id
+    INNER JOIN columns ON tasks.columnId = columns.id
     WHERE columns.boardId = "${boardId}"
   `);
 
@@ -23,7 +23,6 @@ function asyncQueryAllWrapper<T>(db: sqlite3.Database, query: string) {
 export function getTask(db: sqlite3.Database, id: string): Promise<KanbanTask> {
   const responsePromise = new Promise<KanbanTask>((resolve, reject) => {
     db.get<KanbanTask>(`SELECT * FROM tasks WHERE id = "${id}"`, (err, task) => {
-      console.log('task from db', task);
       if (err) {
         reject(err);
       }
@@ -35,10 +34,29 @@ export function getTask(db: sqlite3.Database, id: string): Promise<KanbanTask> {
   return responsePromise;
 }
 
-export function getSubtasks(db: sqlite3.Database, taskId: string): Promise<Subtask[]> {
-  const responsePromise = new Promise<Subtask[]>((resolve, reject) => {
-    db.all<Subtask>(`SELECT * FROM subtasks WHERE taskId = "${taskId}"`, (err, rows) => {
-      console.log('rows', rows);
+export function getSubtasksForBoard(db: sqlite3.Database, boardId: string): Promise<KanbanSubtask[]> {
+  const responsePromise = new Promise<KanbanSubtask[]>((resolve, reject) => {
+    db.all<KanbanSubtask>(`
+      SELECT subtasks.*
+      FROM subtasks 
+      INNER JOIN tasks ON tasks.id = subtasks.taskId
+      INNER JOIN columns ON columns.id = tasks.columnId
+      INNER JOIN boards ON boards.id = columns.boardId
+      WHERE boardId = "${boardId}"`, (err, rows) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(rows);
+    });
+  });
+
+  return responsePromise;
+}
+
+export function getSubtasksForTask(db: sqlite3.Database, taskId: string): Promise<KanbanSubtask[]> {
+  const responsePromise = new Promise<KanbanSubtask[]>((resolve, reject) => {
+    db.all<KanbanSubtask>(`SELECT * FROM subtasks WHERE taskId = "${taskId}"`, (err, rows) => {
       if (err) {
         reject(err);
       }

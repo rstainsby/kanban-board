@@ -1,12 +1,10 @@
 import sqlite3 from "sqlite3";
-import { KanbanColumn } from "~/types/kanban/column";
+import type { KanbanColumn } from "~/types/kanban/column";
 import { useUuidValidator } from '~/server/utils/uuid-validator';
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const boardId = getRouterParam(event, 'boardId');  
   const invalidBoardIdError = useUuidValidator(boardId, 'Board ID');  
-
-  console.log('boardId', boardId, invalidBoardIdError);
 
   if (invalidBoardIdError) {
     throw invalidBoardIdError;
