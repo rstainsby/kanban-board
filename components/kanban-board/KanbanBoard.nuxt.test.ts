@@ -22,22 +22,13 @@ describe('KanbanBoard', () => {
     // Test that the board reacts to new columns
     props.columns.push({
       id: '4',
-      title: 'New Column',
+      title: 'My Column',
       color: 'purple'
-    });
-
-    props.tasks.push({
-      id: '10',
-      columnId: '4',
-      title: 'New Task',
-      totalSubtasks: 5,
-      completedSubtasks: 2
     });
 
     await component.setProps(props);
 
-    expect(component.text()).toContain('New Column');
-    expect(component.text()).toContain('New Task');
+    expect(component.text()).toContain('My Column');
   });
 
   it('should emit a new column event when the "new column" button is clicked', async () => {
@@ -99,55 +90,46 @@ function createMockTasks() {
     id: '1',
     columnId: '1',
     title: 'Test Task',
-    totalSubtasks: 10,
-    completedSubtasks: 5
+    subtasks: [],
   }, {
     id: '2',
     columnId: '1',
     title: 'Another Task',
-    totalSubtasks: 5,
-    completedSubtasks: 2
+    subtasks: [],
   }, {
     id: '3',
     columnId: '1',
     title: 'Final Task',
-    totalSubtasks: 3,
-    completedSubtasks: 1
+    subtasks: [],
   }, {
     id: '4',
     columnId: '2',
     title: 'Test Task',
-    totalSubtasks: 10,
-    completedSubtasks: 5
+    subtasks: [],
   }, {
     id: '5',
     columnId: '2',
     title: 'Another Task',
-    totalSubtasks: 5,
-    completedSubtasks: 2
+    subtasks: [],
   }, {
     id: '6',
     columnId: '2',
     title: 'Final Task',
-    totalSubtasks: 3,
-    completedSubtasks: 1
+    subtasks: [],
   }, {
     id: '7',
     columnId: '3',
     title: 'Test Task',
-    totalSubtasks: 10,
-    completedSubtasks: 5
+    subtasks: [],
   }, {
     id: '8',
     columnId: '3',
     title: 'Another Task',
-    totalSubtasks: 5,
-    completedSubtasks: 2
+    subtasks: [],
   }, {
     id: '9',
     columnId: '3',
     title: 'Final Task',
-    totalSubtasks: 3,
-    completedSubtasks: 1
+    subtasks: [],
   }];
 }

@@ -6,10 +6,12 @@ import type { KanbanBoardCardProps } from './KanbanBoardCard.vue';
 describe('KanbanBoardCard', () => {
   it('should render key content', async () => {
     const props: KanbanBoardCardProps = {
-      id: '1',
+      id: '293e49a8-6014-4eaf-adbe-c7e3f5f4fe14',
       title: 'Test Card',
-      totalSubtasks: 12,
-      completedSubtasks: 5,
+      subtasks: [
+        { id: '1', taskId: '293e49a8-6014-4eaf-adbe-c7e3f5f4fe14', description: 'Subtask 1', status: 0 },
+        { id: '2', taskId: '293e49a8-6014-4eaf-adbe-c7e3f5f4fe14', description: 'Subtask 2', status: 0 }
+      ]
     }
 
     const component = await mountSuspended(KanbanBoardCard, {
@@ -18,6 +20,6 @@ describe('KanbanBoardCard', () => {
     })
 
     expect(component.text()).toContain('Test Card');
-    expect(component.text()).toContain('5 of 12');
+    expect(component.text()).toContain('0 of 2');
   });
 })
