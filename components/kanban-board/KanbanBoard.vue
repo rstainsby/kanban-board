@@ -6,7 +6,7 @@
       :id="column.id"
       :title="column.title"
       :color="column.color"
-      :tasks="tasks.filter(task => task.columnId === column.id)"
+      :tasks="tasksPerColumn.get(column.id)"
       dropzone="true"
       @drop="onDropExistingColumn(column.id, $event)"
       @dragenter.prevent
@@ -16,8 +16,7 @@
         <KanbanBoardCard
             :id="task.id"
             :title="task.title"
-            :totalSubtasks="task.totalSubtasks"
-            :completedSubtasks="task.completedSubtasks"
+            :subtasks="task.subtasks"
             draggable="true" 
             @dragstart="startDrag(task.id, column.id, $event)"
             @dragend="$event.target.classList.remove('dragging')"
@@ -41,6 +40,7 @@
 
 <script setup lang="ts">
 import type { KanbanTask } from '~/types/kanban-task'
+import type { KanbanSubtask } from '~/types/kanban/subtask';
 
 export interface KanbanBoardProps {
   columns: {
@@ -48,16 +48,34 @@ export interface KanbanBoardProps {
     title: string
     color: string
   }[],
-  tasks: KanbanTask[]
+  tasks: (KanbanTask & { subtasks: KanbanSubtask[]})[];
 }
 
 const props = defineProps<KanbanBoardProps>();
 
 const emit = defineEmits<{
   (e: 'newColumnCreation', taskId?: string): void
-}>()
+}>();
 
-const tasks = reactive(props.tasks);
+let tasks = ref(props.tasks);
+
+watch(() => props.tasks, (newTasks) => {
+  tasks.value = newTasks;
+}, { immediate: false });
+
+const tasksPerColumn = computed(() => {
+  const tasksPerColumn = new Map<string, KanbanTask[]>();
+
+  tasks.value.forEach(task => {
+    if (!tasksPerColumn.has(task.columnId)) {
+      tasksPerColumn.set(task.columnId, []);
+    }
+
+    tasksPerColumn.get(task.columnId)?.push(task);
+  });
+
+  return tasksPerColumn;
+});
 
 function startDrag(cardId: string, columnId: string, event: DragEvent) {
   if (!event.dataTransfer) return;
@@ -101,7 +119,7 @@ function onDropNewColumn(event: DragEvent) {
 }
 
 function moveCardToColumn(columnId: string, cardId: string) {
-  const card = tasks.find(task => task.id === cardId);
+  const card = tasks.value.find(task => task.id === cardId);
 
   if (!card) return;
 
