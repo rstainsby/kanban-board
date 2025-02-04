@@ -1,13 +1,14 @@
 <template>
   <div :class="$style['board-container']">
-    <KanbanBoard 
-      v-if="columns && columns.length" 
-      :columns="columns" 
-      :tasks="tasks"/>
-    <div v-else>
+    <div v-if="(!columns || columns.length === 0)">
       <p>This board is empty. Create a new column to get started.</p>
       <Button label="Add New Column" icon="pi pi-check"></Button>
     </div>
+    <KanbanBoard 
+      v-else
+      :columns="columns" 
+      :tasks="tasks"/>
+
   </div>
 </template>
 
@@ -17,8 +18,16 @@ import type { KanbanSubtask } from '~/types/kanban/subtask';
 
 const route = useRoute();
 
-const { data: columnsRaw, error } = useFetch(`/api/boards/${route.params.id}/columns`);
-const { data: tasksRaw, error: tasksError } = useFetch<(KanbanTask & { subtasks: KanbanSubtask[] })[]>(`/api/boards/${route.params.id}/tasks?includeSubtasks=true`);
+const { data: columnsRaw } = await useFetch(() => `/api/boards/${route.params.id}/columns`, {
+  key: `columns-${route.params.id}`,
+});
+
+const { data: tasksRaw } = useFetch<(KanbanTask & { subtasks: KanbanSubtask[] })[]>(() => `/api/boards/${route.params.id}/tasks`, {
+  key: `tasks-${route.params.id}`,
+  params: {
+    includeSubtasks: true
+  }
+});
 
 const columns = computed(() => columnsRaw.value?.map((column) => ({
   id: column.id,
@@ -26,13 +35,18 @@ const columns = computed(() => columnsRaw.value?.map((column) => ({
   color: column.color
 })));
 
-const tasks = computed(() => tasksRaw.value?.map((task) => ({
-  id: task.id,
-  title: task.title,
-  columnId: task.columnId,
-  totalSubtasks: task.subtasks?.length ?? 0,
-  completedSubtasks: task.subtasks?.filter((subtask: any) => subtask.completed).length ?? 0
-})) ?? []);
+const tasks = computed(() => {
+  if (!tasksRaw.value) {
+    return [];
+  }
+
+  return tasksRaw.value.map((task) => ({
+    id: task.id,
+    title: task.title,
+    columnId: task.columnId,
+    subtasks: task.subtasks
+  }));
+});
 </script>
 
 <style module>
