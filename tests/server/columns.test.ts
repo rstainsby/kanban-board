@@ -71,7 +71,7 @@ describe("[GET] boards/[id]/columns", async () => {
 });
 
 const createMockColumns = (): KanbanColumn[]  => [
-  { id: '12144ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 1', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9' }, 
-  { id: '22144ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 2', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9' },
-  { id: '6744ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 3', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9' },
+  { id: '12144ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 1', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9', color: 'red' }, 
+  { id: '22144ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 2', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9', color: 'blue' },
+  { id: '6744ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 3', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9', color: 'green' },
 ]
