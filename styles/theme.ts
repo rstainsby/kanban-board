@@ -205,6 +205,37 @@ const MyPreset = definePreset(Aura, {
                     borderColor: "{surface.300}",
                     hoverBackground: "{surface.50}",
                 },
+                content: {
+                    background: "{surface.50}",
+                    hoverBackground: "{surface.100}",
+                    borderColor: "{surface.100}",
+                    color: "{text.color}",
+                    hoverColor: "{text.hover.color}"
+                },
+                overlay: {
+                    select: {
+                        background: "{surface.50}",
+                        borderColor: "{surface.100}",
+                        color: "{text.color}"
+                    },
+                    popover: {
+                        background: "{surface.50}",
+                        borderColor: "{surface.100}",
+                        color: "{text.color}"
+                    },
+                    modal: {
+                        background: "{surface.50}",
+                        borderColor: "{surface.100}",
+                        color: "{text.color}"
+                    },
+                    hightlight: {
+                        background: "{surface.200}",
+                    }
+                },
+                mask: {
+                    background: "transparent",
+                    color: "{surface.200}"
+                },
             },
             dark: {
                 surface: {
