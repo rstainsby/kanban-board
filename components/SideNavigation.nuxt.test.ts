@@ -31,7 +31,7 @@ describe('SideNavigation', () => {
 
     const sideNav = component.find('#side-navigation');
 
-    expect(sideNav.isVisible()).toBe(false);
+    expect(sideNav.attributes('class')).toContain('closed');
   });
 
   it('should hide the sidenav when the close button is clicked', async () => {
@@ -47,7 +47,7 @@ describe('SideNavigation', () => {
     
     const sideNav = component.find('#side-navigation');
 
-    expect(sideNav.isVisible()).toBeFalsy();
+    expect(sideNav.attributes('class')).toContain('closed');
   });
 
   it('should show the sidenav when the open button is clicked', async () => {
@@ -63,7 +63,7 @@ describe('SideNavigation', () => {
 
     const sideNav = component.find('#side-navigation');
 
-    expect(sideNav.isVisible()).toBeTruthy();
+    expect(sideNav.attributes('class')).not.toContain('closed');
   });
 
   it('should emit an event when the sidenav is closed', async () => {

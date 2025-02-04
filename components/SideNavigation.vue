@@ -71,9 +71,11 @@ function onClose() {
     transition-property: left, opacity;
     transition-duration: 0.3s;
     transition-delay: 0s 0.3s;
+    opacity: 1;
   }
 
   .side-navigation--closed {
+    opacity: 0;
     left: -20rem;
   }
 
