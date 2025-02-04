@@ -1,5 +1,5 @@
 <template>
-    <fieldset id="color-scheme" :class="$style['theme-selector']">
+    <fieldset id="color-scheme" data-testid="theme-toggle" :class="$style['theme-selector']">
     <div>
       <input 
         type="radio" 
@@ -46,11 +46,9 @@
 
 <script lang="ts" setup>
   const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const theme = ref(localStorage.getItem('theme') || systemTheme);
+  let theme = ref(localStorage.getItem('theme') || systemTheme);
 
-  onMounted(() => {
-    document.documentElement.dataset.theme = theme.value;
-  });
+  document.documentElement.dataset.theme = theme.value;
 
   function changeTheme(theme: string) {
     if (theme === 'system') {
@@ -79,8 +77,9 @@
     width: calc((var(--icon-size) * 3) + 2.8rem);
     padding: 0.25rem 0.75rem;
     cursor: pointer;
-    box-shadow: inset 1px 1px 0px rgba(0, 0, 0, 0.3);
+    border: none;
     border-radius: 100px;
+    border: 1px solid var(--p-primary-color);
     background-color: var(--theme-selector-background, var(--p-surface-100));
     color: var(--p-text-color);
     fill: var(--p-text-color);
@@ -134,7 +133,7 @@
   }
 
   .theme-selector:has(.theme-input--dark:checked).theme-selector::after {
-    transform: translateX(calc(100cqw - var(--icon-size) + 0.5rem));
+    transform: translateX(calc(100cqw - var(--icon-size) + 0.4rem));
   }
 
   .theme-selector:has(.theme-input--light:checked).theme-selector::after {
