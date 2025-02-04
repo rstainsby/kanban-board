@@ -55,6 +55,7 @@ const props = defineProps<KanbanBoardProps>();
 
 const emit = defineEmits<{
   (e: 'newColumnCreation', taskId?: string): void
+  (e: 'taskMoved', taskId: string, columnId: string): void
 }>();
 
 let tasks = ref(props.tasks);
@@ -104,6 +105,8 @@ function onDropExistingColumn(columnId: string, event: DragEvent) {
   const element = event.target as HTMLElement;
 
   element?.classList.remove('dragging');
+
+  emit('taskMoved', cardId, columnId);
 }
 
 function onDropNewColumn(event: DragEvent) {

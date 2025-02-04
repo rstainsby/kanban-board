@@ -7,7 +7,9 @@
     <KanbanBoard 
       v-else
       :columns="columns" 
-      :tasks="tasks"/>
+      :tasks="tasks"
+      @task-moved="onTaskMoved"
+      @new-column-creation="onNewColumnCreation"/>
 
   </div>
 </template>
@@ -22,7 +24,7 @@ const { data: columnsRaw } = await useFetch(() => `/api/boards/${route.params.id
   key: `columns-${route.params.id}`,
 });
 
-const { data: tasksRaw } = useFetch<(KanbanTask & { subtasks: KanbanSubtask[] })[]>(() => `/api/boards/${route.params.id}/tasks`, {
+const { data: tasksRaw, refresh: refreshTasks } = useFetch<(KanbanTask & { subtasks: KanbanSubtask[] })[]>(() => `/api/boards/${route.params.id}/tasks`, {
   key: `tasks-${route.params.id}`,
   params: {
     includeSubtasks: true
@@ -47,6 +49,22 @@ const tasks = computed(() => {
     subtasks: task.subtasks
   }));
 });
+
+const onNewColumnCreation = () => {
+
+};
+
+const onTaskMoved = (taskId: string, columnId: string) => {
+  $fetch(`/api/tasks/${taskId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      columnId
+    })
+  }).then(() => {
+    console.log("done")
+    refreshTasks();
+  });
+};
 </script>
 
 <style module>
