@@ -1,8 +1,12 @@
 <template>
   <div :class="$style['board-container']">
-    <div v-if="(!columns || columns.length === 0)">
+    <div v-if="(!columns || columns.length === 0)" :class="$style['empty-board']">
       <p>This board is empty. Create a new column to get started.</p>
-      <Button label="Add New Column" icon="pi pi-check"></Button>
+      <Button  label="Add New Column" size="large" rounded @click="onNewColumnCreation">
+        <template #icon>
+          +
+        </template>
+      </Button>
     </div>
     <KanbanBoard 
       v-else
@@ -20,7 +24,7 @@ import type { KanbanSubtask } from '~/types/kanban/subtask';
 
 const route = useRoute();
 
-const { data: columnsRaw } = await useFetch(() => `/api/boards/${route.params.id}/columns`, {
+const { data: columnsRaw, refresh: refreshColumns } = await useFetch(() => `/api/boards/${route.params.id}/columns`, {
   key: `columns-${route.params.id}`,
 });
 
@@ -51,7 +55,15 @@ const tasks = computed(() => {
 });
 
 const onNewColumnCreation = () => {
-
+  $fetch(`/api/boards/${route.params.id}/columns`, {
+    method: 'POST',
+    body: JSON.stringify({
+      name: 'New Column',
+      color: '#72A'
+    })
+  }).then(() => {
+    refreshColumns();
+  });
 };
 
 const onTaskMoved = (taskId: string, columnId: string) => {
@@ -61,7 +73,6 @@ const onTaskMoved = (taskId: string, columnId: string) => {
       columnId
     })
   }).then(() => {
-    console.log("done")
     refreshTasks();
   });
 };
@@ -71,6 +82,27 @@ const onTaskMoved = (taskId: string, columnId: string) => {
 .board-container {
   position: absolute;
   top: 0;
+  left: 0;
   bottom: 0;
+  right: 0;
+}
+
+.empty-board {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}
+
+.empty-board p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--p-text-color);
+  opacity: 0.7;
 }
 </style>

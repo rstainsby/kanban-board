@@ -147,7 +147,9 @@ function moveCardToColumn(columnId: string, cardId: string) {
     justify-content: start;
     align-items: start;
     gap: 1rem;
-    height: 90%;
+    height: 100%;
+    padding-right: 1rem;
+    overflow: auto;
   }
 
   .new-column {
@@ -156,6 +158,7 @@ function moveCardToColumn(columnId: string, cardId: string) {
     gap: 1rem;
     height: 100%;
     width: 17.5rem;
+    min-width: 17.5rem;
     border-radius: var(--p-border-radius-md);
     margin-top: 3rem; /* The height of the column header + margin */
     border: 2px dashed var(--p-new-column-border-color); 
