@@ -5,7 +5,7 @@ import type { KanbanColumn } from "~/types/kanban/column";
 
 describe("[GET] boards/[id]/columns", async () => {
   let h3 = useH3TestUtils();
-  const handler = await import('~/server/api/boards/[id]/columns.get');
+  const handler = await import('~/server/api/boards/[boardId]/columns/index.get');
 
   it("should be registered as an event handler", async () => {
     expect(h3.defineEventHandler).toHaveBeenCalled();
@@ -70,8 +70,72 @@ describe("[GET] boards/[id]/columns", async () => {
   });
 });
 
+describe("[POST] boards/[id]/columns", async () => {
+  let h3 = useH3TestUtils();
+  const handler = await import('~/server/api/boards/[boardId]/columns/index.post');
+
+  it("should be registered as an event handler", async () => {
+    expect(h3.defineEventHandler).toHaveBeenCalled();
+  });
+
+  it('should throw an error if the id is not a UUID', async () => {
+    const event: Partial<H3Event> = {
+      context: {
+        params: { boardId: '1' },
+        query: {}
+      },
+    };
+
+    try {
+      await handler.default(event as H3Event);
+    } catch (error: any) {
+      expect(error.statusCode).toBe(400);
+      expect(error.statusMessage).toContain('Invalid board ID');
+    }
+  });
+
+  it('should add a new column to the database', async () => {
+    const event: Partial<H3Event> = {
+      context: {
+        $db: {
+          run: vi.fn((query: string, values: any, cb: (err: Error | null) => void) => {
+            // Mock the behaviour of an INSERT statement;
+            expect(values.$id).toBeDefined();
+            expect(values.$name).toContain('Column 4');
+            expect(values.$color).toContain('yellow');
+            expect(values.$boardId).toContain('52144ec3-a5e1-416b-958d-66a407f44cc9');
+            expect(query).toContain('INSERT INTO columns (id, name, boardId, color) VALUES ($id, $name, $boardId, $color)');
+          }),
+        },
+        params: {
+          boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9'
+        },
+        body: { name: 'Column 4', color: 'yellow' }
+      },
+    };
+
+    await handler.default(event as H3Event);
+  });
+
+  it('should throw an error if the request body is invalid', async () => {
+    const event: Partial<H3Event> = {
+      context: {
+        params: { boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9' },
+        body: JSON.stringify({ color: 'yellow' })
+      },
+    };
+
+    try {
+      await handler.default(event as H3Event);
+    } catch (error: any) {
+      expect(error.statusCode).toBe(400);
+      expect(error.statusMessage).toContain('Invalid request body');
+    }
+  });
+});
+
 const createMockColumns = (): KanbanColumn[]  => [
-  { id: '12144ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 1', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9' }, 
-  { id: '22144ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 2', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9' },
-  { id: '6744ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 3', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9' },
+  { id: '12144ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 1', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9', color: 'red' }, 
+  { id: '22144ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 2', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9', color: 'blue' },
+  { id: '6744ec3-a5e1-416b-958d-66a407f44cc9', name: 'Column 3', boardId: '52144ec3-a5e1-416b-958d-66a407f44cc9', color: 'green' },
 ]

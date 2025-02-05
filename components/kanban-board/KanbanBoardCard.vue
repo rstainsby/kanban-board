@@ -12,14 +12,18 @@
 </template>
 
 <script setup lang="ts">
+  import type { KanbanSubtask } from '~/types/kanban/subtask';
+
   export interface KanbanBoardCardProps {
     id: string
     title: string
-    totalSubtasks: number
-    completedSubtasks: number
+    subtasks: KanbanSubtask[]
   }
 
-  defineProps<KanbanBoardCardProps>();
+  const props = defineProps<KanbanBoardCardProps>();
+
+  const totalSubtasks = computed(() => props.subtasks?.length ?? 0);
+  const completedSubtasks = computed(() => props.subtasks?.filter((subtask) => subtask.status).length ?? 0);
 </script>
 
 <style module>

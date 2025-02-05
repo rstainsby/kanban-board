@@ -1,7 +1,8 @@
-interface Subtask {
+interface KanbanSubtask {
   id: string;
   taskId: string;
   description: string;
+  status: number;
 };
 
-export type { Subtask };
+export type { KanbanSubtask };

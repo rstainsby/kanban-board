@@ -19,8 +19,7 @@
           <KanbanBoardCard
             :id="task.id"
             :title="task.title"
-            :totalSubtasks="task.totalSubtasks"
-            :completedSubtasks="task.completedSubtasks"
+            :subtasks="task.subtasks"
           />
       </slot>
     </div>
@@ -30,16 +29,17 @@
 <script setup lang="ts">
 import type { KanbanTask } from '~/types/kanban-task';
 import KanbanBoardCard from './KanbanBoardCard.vue';
+import type { KanbanSubtask } from '~/types/kanban/subtask';
 
 export interface KanbanColumnProps {
   id: string
   title: string
   color: string
-  tasks: KanbanTask[]
+  tasks: (KanbanTask & { subtasks: KanbanSubtask[]})[] | undefined
 }
 
 const props = defineProps<KanbanColumnProps>();
-const totalTasks = computed(() => props.tasks.length);
+const totalTasks = computed(() => props.tasks?.length ?? 0);
 
 defineEmits<{
   (e: 'createTaskForColumn', columnId: string): void

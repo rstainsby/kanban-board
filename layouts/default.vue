@@ -48,7 +48,8 @@
   .top-navigation-layout {
     position: relative;
     min-height: 90vh;
-    max-height: 90vh;
+    height: 90vh;
+    max-height: 100vh;
   }
 
   .page-header {
@@ -60,13 +61,15 @@
     position: absolute;
     top: 0;
     left: 0;
+    right: 1rem;
     bottom: 0;
     transition: left 0.3s;
+    overflow-x: hidden;
     padding: 24px;
   }
 
   .page-content--sidenav-open {
-    left: 20rem;
+    left: 21rem;
   }
 
   .link {
