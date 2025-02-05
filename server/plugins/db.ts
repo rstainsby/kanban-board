@@ -1,9 +1,11 @@
 import sqlite3 from "sqlite3";
 
-const DB_PATH = './server/db/kanban.db';
+export default defineNitroPlugin(async (nitroApp) => {
+   const db = new sqlite3.Database(':memory:');
 
-export default defineNitroPlugin((nitroApp) => {
-   const db = new sqlite3.Database(DB_PATH);
+   const initialiseScript = await useStorage('assets:server').getItem('initialise.sql');
+
+   db.exec(initialiseScript as string);
 
    nitroApp.hooks.hook('request', (event) => {
       event.context.$db = db;
